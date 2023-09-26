@@ -69,9 +69,11 @@ Update_Status ModulePlayer::Update()
 	// Moving the player with the camera scroll
 	// App->player->position.x += 1;
 
+	/*
 	if (speed > 0) {
 		App->physics->Move(position, 0, speed - 10, mass);
 	}
+	*/
 	
 
 	if (App->input->keys[SDL_SCANCODE_A] == Key_State::KEY_REPEAT)

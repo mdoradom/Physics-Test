@@ -9,7 +9,9 @@ ModulePhysics::ModulePhysics(bool startEnabled) : Module(startEnabled)
 }
 
 ModulePhysics::~ModulePhysics()
-{}
+{
+
+}
 
 bool ModulePhysics::Init()
 {
@@ -24,6 +26,6 @@ bool ModulePhysics::CleanUp()
 void ModulePhysics::Move(fPoint position, float force, float acceleration, float mass) {
 
 	App->player->position.x += velocity * dt;
-	velocity += ((force / mass) * dt) * acceleration;
+	velocity += ((force / mass) * dt);
 
 }
