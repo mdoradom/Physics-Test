@@ -34,10 +34,13 @@ public:
 
 public:
 	// Position of the player in the map
-	iPoint position;
+	fPoint position;
 
 	// The speed in which we move the player (pixels per frame)
-	int speed = 1;
+	int speed = 0;
+
+	// Mass of the player
+	float mass = 80;	// [KG]
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;

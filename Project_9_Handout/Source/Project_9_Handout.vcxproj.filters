@@ -106,14 +106,8 @@
     <ClInclude Include="ModuleFonts.h">
       <Filter>Source Files\Modules\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Dummy.h">
-      <Filter>Source Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="p2DynArray.h">
-      <Filter>Source Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="p2List.h">
-      <Filter>Source Files\Utils</Filter>
+    <ClInclude Include="ModulePhysics.h">
+      <Filter>Source Files\Modules\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +181,9 @@
       <Filter>Source Files\Modules\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="ModuleFonts.cpp">
+      <Filter>Source Files\Modules\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulePhysics.cpp">
       <Filter>Source Files\Modules\Core</Filter>
     </ClCompile>
   </ItemGroup>

@@ -11,6 +11,7 @@
 #include "ModuleFonts.h"
 
 #include <stdio.h>
+#include "ModulePhysics.h"
 
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
@@ -52,7 +53,7 @@ bool ModulePlayer::Start()
 
 	destroyed = false;
 
-	collider = App->collisions->AddCollider({ position.x, position.y, 32, 16 }, Collider::Type::PLAYER, this);
+	collider = App->collisions->AddCollider({ (int)position.x, (int)position.y, 32, 16 }, Collider::Type::PLAYER, this);
 
 	// TODO 0: Notice how a font is loaded and the meaning of all its arguments 
 	char lookupTable[] = { "!  ,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz" };
@@ -68,15 +69,35 @@ Update_Status ModulePlayer::Update()
 	// Moving the player with the camera scroll
 	// App->player->position.x += 1;
 
+	if (speed > 0) {
+		App->physics->Move(position, 0, speed - 10, mass);
+	}
+	
+
 	if (App->input->keys[SDL_SCANCODE_A] == Key_State::KEY_REPEAT)
 	{
-		position.x -= speed;
+		// position.x -= speed;
+
+		if (speed > 2) {
+			speed--;
+		}
+
+		App->physics->Move(position, -10000, speed, mass);
+		
 	}
 
 	if (App->input->keys[SDL_SCANCODE_D] == Key_State::KEY_REPEAT)
 	{
-		position.x += speed;
+		
+		if (speed < 2) {
+			speed++;
+		}
+		
+		App->physics->Move(position, 10000, speed, mass);
+
 	}
+
+	/*
 
 	if (App->input->keys[SDL_SCANCODE_S] == Key_State::KEY_REPEAT)
 	{
@@ -105,12 +126,16 @@ Update_Status ModulePlayer::Update()
 		App->audio->PlayFx(laserFx);
 	}
 
+	
+
 	// If no up/down movement detected, set the current animation back to idle
 	if (App->input->keys[SDL_SCANCODE_S] == Key_State::KEY_IDLE
 		&& App->input->keys[SDL_SCANCODE_W] == Key_State::KEY_IDLE)
 		currentAnimation = &idleAnim;
 
-	collider->SetPos(position.x, position.y);
+	*/
+
+	collider->SetPos((float)position.x, (float)position.y);
 
 	currentAnimation->Update();
 
