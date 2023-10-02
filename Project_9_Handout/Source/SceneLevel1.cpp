@@ -25,11 +25,14 @@ bool SceneLevel1::Start()
 
 	bool ret = true;
 
-	bgTexture = App->textures->Load("Assets/Sprites/background.png");
+	bgTexture = App->textures->Load("Assets/Sprites/fondito.png");
+	grassTexture = App->textures->Load("Assets/Sprites/suelito.png");
+	plantTexture = App->textures->Load("Assets/Sprites/plantitas.png");
 	App->audio->PlayMusic("Assets/Music/stage1.ogg", 1.0f);
 
 	// Add colliders
-	App->collisions->AddCollider({ 0, 224, 3930, 16 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 0, 221, 3930, 16 }, Collider::Type::WALL);
+	currentAnimation = &plantAnim;
 
 	// Remder camear
 	App->render->camera.x = 0;
@@ -54,6 +57,8 @@ Update_Status SceneLevel1::PostUpdate()
 {
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, NULL);
+	App->render->Blit(grassTexture, 0, 221, NULL);
+	App->render->Blit(plantTexture, 280, 221, NULL);
 
 	return Update_Status::UPDATE_CONTINUE;
 }

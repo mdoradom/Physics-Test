@@ -34,6 +34,12 @@ public:
 	
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
+	SDL_Texture* grassTexture = nullptr;
+	SDL_Texture* plantTexture = nullptr;
+
+	Animation* currentAnimation = nullptr;
+
+	Animation plantAnim;
 };
 
 #endif
