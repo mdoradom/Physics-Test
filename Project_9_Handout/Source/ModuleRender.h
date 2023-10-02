@@ -42,7 +42,7 @@ public:
 	// Param x,y		- Position x,y in the screen (upper left axis)
 	// Param section	- The portion of the texture we want to copy. nullptr for the entire texture
 	// Param speed		- The amount of effect that is applied to the sprite depending on the camera
-	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = nullptr, float speed = 1.0f, bool useCamera = true);
+	bool Blit(SDL_Texture* texture, float x, float y, const SDL_Rect* section = nullptr, float speed = 1.0f, bool useCamera = true);
 
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, float speed = 1.0f, bool useCamera = true);
 
@@ -55,7 +55,7 @@ public:
 	SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	// The speed at which the camera will be moving
-	int cameraSpeed = 3;
+	float cameraSpeed = 3;
 
 };
 
