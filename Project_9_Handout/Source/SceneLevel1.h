@@ -3,8 +3,11 @@
 
 #include "Module.h"
 #include "Animation.h"
+#include <vector>
 
 struct SDL_Texture;
+
+using namespace std;
 
 class SceneLevel1 : public Module
 {
@@ -40,6 +43,12 @@ public:
 	Animation* currentAnimation = nullptr;
 
 	Animation plantAnim;
+
+	// Physics objects
+	vector<PhysBall> balls{};
+	Atmosphere atmosphere{};
+	Ground ground{};
+	Water water{};
 };
 
 #endif

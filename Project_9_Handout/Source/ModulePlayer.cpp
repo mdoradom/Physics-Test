@@ -92,7 +92,7 @@ Update_Status ModulePlayer::Update()
 	}
 	*/
 
-	App->physics->ParabolicShot(position, mass, 90.0);
+	//App->physics->ParabolicShot(position, mass, 90.0);
 	
 
 	if (App->input->keys[SDL_SCANCODE_A] == Key_State::KEY_REPEAT)
@@ -108,7 +108,7 @@ Update_Status ModulePlayer::Update()
 			currentAnimation = &walkLeftAnim;
 		}
 
-		App->physics->Move(position, -10000, speed, mass);
+		//App->physics->Move(position, -10000, speed, mass);
 		
 	}
 
@@ -124,7 +124,7 @@ Update_Status ModulePlayer::Update()
 			currentAnimation = &walkRigtAnim;
 		}
 		
-		App->physics->Move(position, 10000, speed, mass);
+		//App->physics->Move(position, 10000, speed, mass);
 
 	}
 
