@@ -19,12 +19,15 @@ public:
 
 	void Move(fPoint position, float force, float acceleration, float mass);
 
+
+	void ParabolicShot(fPoint position, float mass, float angle);
+
 	//void Collide() override;
 
 public:
 	const float GRAVITY = -9.81;
 	float dt = 1.0 / 60; // TODO adaptar a refresco de pantalla
-	float velocity = 0;
+	fPoint velocity;
 };
 
 #endif // __ModulePhysics_H__

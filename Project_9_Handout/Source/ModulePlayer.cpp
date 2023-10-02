@@ -74,6 +74,8 @@ Update_Status ModulePlayer::Update()
 		App->physics->Move(position, 0, speed - 10, mass);
 	}
 	*/
+
+	App->physics->ParabolicShot(position, mass, 90.0);
 	
 
 	if (App->input->keys[SDL_SCANCODE_A] == Key_State::KEY_REPEAT)
@@ -121,14 +123,20 @@ Update_Status ModulePlayer::Update()
 		}
 	}
 
+	*/
+
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
+
+		/*
 		Particle* newParticle = App->particles->AddParticle(App->particles->laser, position.x + 20, position.y, Collider::Type::PLAYER_SHOT);
 		newParticle->collider->AddListener(this);
 		App->audio->PlayFx(laserFx);
+		*/
 	}
 
 	
+	/*
 
 	// If no up/down movement detected, set the current animation back to idle
 	if (App->input->keys[SDL_SCANCODE_S] == Key_State::KEY_IDLE
