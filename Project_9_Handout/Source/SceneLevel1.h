@@ -40,6 +40,8 @@ public:
 	Animation* currentAnimation = nullptr;
 
 	Animation plantAnim;
+
+	bool staying;
 };
 
 #endif

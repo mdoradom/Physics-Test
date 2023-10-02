@@ -9,6 +9,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleFonts.h"
+#include "SceneLevel1.h"
 
 #include <stdio.h>
 #include "ModulePhysics.h"
@@ -70,7 +71,7 @@ bool ModulePlayer::Start()
 
 	destroyed = false;
 
-	collider = App->collisions->AddCollider({ (int)position.x, (int)position.y, 64, 64 }, Collider::Type::PLAYER, this);
+	collider = App->collisions->AddCollider({ (int)position.x, (int)position.y, 58, 60 }, Collider::Type::PLAYER, this);
 
 	// TODO 0: Notice how a font is loaded and the meaning of all its arguments 
 	char lookupTable[] = { "!  ,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz" };
@@ -181,11 +182,7 @@ Update_Status ModulePlayer::Update()
 
 Update_Status ModulePlayer::PostUpdate()
 {
-	if (!destroyed)
-	{
-		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		App->render->Blit(texture, position.x, position.y, &rect);
-	}
+	 rect = currentAnimation->GetCurrentFrame();
 
 	// Draw UI (score) --------------------------------------
 	sprintf_s(scoreText, 10, "%7d", score);
@@ -199,6 +196,20 @@ Update_Status ModulePlayer::PostUpdate()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
+	if (c1 == collider && destroyed == false)
+	{
+		position.y = 162;
+	}
+
+	if (c2->type == Collider::Type::ENEMY)
+	{
+		App->sceneLevel_1->staying = true;
+	}
+	else
+	{
+		App->sceneLevel_1->staying = false;
+	}
+
 	//if (c1 == collider && destroyed == false)
 	//{
 	//	App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE, 9);

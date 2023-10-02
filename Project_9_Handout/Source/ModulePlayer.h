@@ -49,6 +49,8 @@ public:
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnimation = nullptr;
 
+	SDL_Rect rect;
+
 	// A set of animations
 	Animation idleAnim;
 	Animation walkRigtAnim;
