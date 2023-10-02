@@ -16,19 +16,36 @@
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
 	// idle animation - just one sprite
-	idleAnim.PushBack({ 66, 1, 32, 14 });
+	idleAnim.PushBack({ 0, 256, 64, 64 });
+	idleAnim.PushBack({ 64, 256, 64, 64 });
+	idleAnim.PushBack({ 128, 256, 64, 64 });
+	idleAnim.PushBack({ 0, 320, 64, 64 });
+	idleAnim.PushBack({ 64, 320, 64, 64 });
+	idleAnim.PushBack({ 128, 320, 64, 64 });
+	idleAnim.PushBack({ 0, 384, 64, 64 });
+	idleAnim.PushBack({ 64, 384, 64, 64 });
+	idleAnim.PushBack({ 128, 382, 64, 64 });
+	idleAnim.PushBack({ 0, 448, 64, 64 });
+	idleAnim.PushBack({ 64, 448, 64, 64 });
+	idleAnim.PushBack({ 128, 448, 64, 64 });
+	idleAnim.loop = true;
+	idleAnim.speed = 0.08f;
 
-	// move upwards
-	upAnim.PushBack({ 100, 1, 32, 14 });
-	upAnim.PushBack({ 132, 0, 32, 14 });
-	upAnim.loop = false;
-	upAnim.speed = 0.1f;
+	// move right
+	walkRigtAnim.PushBack({ 0, 192, 64, 64 });
+	walkRigtAnim.PushBack({ 64, 192, 64, 64 });
+	walkRigtAnim.PushBack({ 128, 192, 64, 64 });
+	walkRigtAnim.PushBack({ 192, 192, 64, 64 });
+	walkRigtAnim.loop = true;
+	walkRigtAnim.speed = 0.1f;
 
-	// Move down
-	downAnim.PushBack({ 33, 1, 32, 14 });
-	downAnim.PushBack({ 0, 1, 32, 14 });
-	downAnim.loop = false;
-	downAnim.speed = 0.1f;
+	// Move left
+	walkLeftAnim.PushBack({ 0, 128, 64, 64 });
+	walkLeftAnim.PushBack({ 64, 128, 64, 64 });
+	walkLeftAnim.PushBack({ 128, 128, 64, 64 });
+	walkLeftAnim.PushBack({ 192, 128, 64, 64 });
+	walkLeftAnim.loop = true;
+	walkLeftAnim.speed = 0.1f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -42,18 +59,18 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	texture = App->textures->Load("Assets/Sprites/ship.png");
+	texture = App->textures->Load("Assets/Sprites/gatita.png");
 	currentAnimation = &idleAnim;
 
 	laserFx = App->audio->LoadFx("Assets/Fx/laser.wav");
 	explosionFx = App->audio->LoadFx("Assets/Fx/explosion.wav");
 
 	position.x = 150;
-	position.y = 120;
+	position.y = 162;
 
 	destroyed = false;
 
-	collider = App->collisions->AddCollider({ (int)position.x, (int)position.y, 32, 16 }, Collider::Type::PLAYER, this);
+	collider = App->collisions->AddCollider({ (int)position.x, (int)position.y, 64, 64 }, Collider::Type::PLAYER, this);
 
 	// TODO 0: Notice how a font is loaded and the meaning of all its arguments 
 	char lookupTable[] = { "!  ,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz" };
@@ -83,6 +100,11 @@ Update_Status ModulePlayer::Update()
 		if (speed > 2) {
 			speed--;
 		}
+		if (currentAnimation != &walkLeftAnim)
+		{
+			walkLeftAnim.Reset();
+			currentAnimation = &walkLeftAnim;
+		}
 
 		App->physics->Move(position, -10000, speed, mass);
 		
@@ -93,6 +115,11 @@ Update_Status ModulePlayer::Update()
 		
 		if (speed < 2) {
 			speed++;
+		}
+		if (currentAnimation != &walkRigtAnim)
+		{
+			walkRigtAnim.Reset();
+			currentAnimation = &walkRigtAnim;
 		}
 		
 		App->physics->Move(position, 10000, speed, mass);
@@ -164,22 +191,22 @@ Update_Status ModulePlayer::PostUpdate()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1 == collider && destroyed == false)
-	{
-		App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE, 9);
-		App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE, 14);
-		App->particles->AddParticle(App->particles->explosion, position.x - 7, position.y + 12, Collider::Type::NONE, 40);
-		App->particles->AddParticle(App->particles->explosion, position.x + 5, position.y - 5, Collider::Type::NONE, 28);
-		App->particles->AddParticle(App->particles->explosion, position.x - 4, position.y - 4, Collider::Type::NONE, 21);
+	//if (c1 == collider && destroyed == false)
+	//{
+	//	App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE, 9);
+	//	App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE, 14);
+	//	App->particles->AddParticle(App->particles->explosion, position.x - 7, position.y + 12, Collider::Type::NONE, 40);
+	//	App->particles->AddParticle(App->particles->explosion, position.x + 5, position.y - 5, Collider::Type::NONE, 28);
+	//	App->particles->AddParticle(App->particles->explosion, position.x - 4, position.y - 4, Collider::Type::NONE, 21);
 
-		App->audio->PlayFx(explosionFx);
-		App->fade->FadeToBlack((Module*)App->sceneLevel_1, (Module*)App->sceneIntro, 60);
+	//	App->audio->PlayFx(explosionFx);
+	//	App->fade->FadeToBlack((Module*)App->sceneLevel_1, (Module*)App->sceneIntro, 60);
 
-		destroyed = true;
-	}
+	//	destroyed = true;
+	//}
 
-	if (c1->type == Collider::Type::PLAYER_SHOT && c2->type == Collider::Type::ENEMY)
-	{
-		score += 23;
-	}
+	//if (c1->type == Collider::Type::PLAYER_SHOT && c2->type == Collider::Type::ENEMY)
+	//{
+	//	score += 23;
+	//}
 }
