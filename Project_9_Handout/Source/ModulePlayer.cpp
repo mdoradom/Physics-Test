@@ -93,7 +93,7 @@ Update_Status ModulePlayer::Update()
 	}
 	*/
 
-	App->physics->ParabolicShot(position, mass, 90.0);
+	//App->physics->ParabolicShot(position, mass, 90.0);
 	
 
 	if (App->input->keys[SDL_SCANCODE_A] == Key_State::KEY_REPEAT)
