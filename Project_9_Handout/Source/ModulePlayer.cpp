@@ -92,7 +92,7 @@ Update_Status ModulePlayer::Update()
 	}
 	*/
 
-	App->physics->ParabolicShot(position, mass, 90.0);
+	App->physics->ParabolicShot(position, mass, 0);
 	
 
 	if (App->input->keys[SDL_SCANCODE_A] == Key_State::KEY_REPEAT)
@@ -199,7 +199,8 @@ Update_Status ModulePlayer::PostUpdate()
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	//if (c1 == collider && destroyed == false)
+	if (c2->type == Collider::Type::WALL && destroyed == false) { position.y = 162; }
+	if (c2->type == Collider::Type::PORTAL && destroyed == false) { position.y = 60; position.x = 275; }
 	//{
 	//	App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE, 9);
 	//	App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE, 14);

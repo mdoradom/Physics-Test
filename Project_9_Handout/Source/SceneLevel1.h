@@ -36,10 +36,14 @@ public:
 	SDL_Texture* bgTexture = nullptr;
 	SDL_Texture* grassTexture = nullptr;
 	SDL_Texture* plantTexture = nullptr;
+	SDL_Texture* greenPortalTexture = nullptr;
+	SDL_Texture* purplePortalTexture = nullptr;
 
 	Animation* currentAnimation = nullptr;
+	Animation* currentPortalAnimation = nullptr;
 
 	Animation plantAnim;
+	Animation idlePortalAnim;
 };
 
 #endif
