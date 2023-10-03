@@ -76,7 +76,7 @@ Update_Status SceneLevel1::PostUpdate()
 	SDL_Rect greenPortalRect = currentPortalAnimation->GetCurrentFrame();
 	App->render->Blit(greenPortalTexture, 0, 160, &greenPortalRect);
 	SDL_Rect purplePortalRect = currentPortalAnimation->GetCurrentFrame();
-	App->render->Blit(purplePortalTexture, 275, 60, &purplePortalRect);
+	App->render->Blit(purplePortalTexture, 325, 160, &purplePortalRect);
 
 	return Update_Status::UPDATE_CONTINUE;
 }
