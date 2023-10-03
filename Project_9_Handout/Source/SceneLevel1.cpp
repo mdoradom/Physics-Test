@@ -78,6 +78,8 @@ Update_Status SceneLevel1::PostUpdate()
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	App->render->Blit(plantTexture, 280, 190, &rect);
+	App->render->Blit(plantTexture, 310, 190, &rect);
+
 
 	return Update_Status::UPDATE_CONTINUE;
 }
