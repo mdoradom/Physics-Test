@@ -27,7 +27,7 @@ Application::Application()
 	modules[2] =	textures =		new ModuleTextures(true);
 	modules[3] =	audio =			new ModuleAudio(true);
 
-	modules[4] =	physics =		new ModulePhysics(true);
+	modules[4] =	physics =		new ModulePhysics(false);
 
 	modules[5] =	sceneIntro =	new SceneIntro(true);
 	modules[6] =	sceneLevel_1 =	new SceneLevel1(false);		//Gameplay scene starts disabled

@@ -9,7 +9,6 @@
 
 SceneIntro::SceneIntro(bool startEnabled) : Module(startEnabled)
 {
-
 }
 
 SceneIntro::~SceneIntro()

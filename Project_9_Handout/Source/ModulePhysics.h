@@ -5,12 +5,10 @@
 #include "p2Point.h"
 #include <vector>
 #include <SDL/include/SDL.h>
+#include "Application.h"
+#include "Globals.h"
 
-#define PIXELS_PER_METER (20.0f) // if touched change METER_PER_PIXEL too
-#define METER_PER_PIXEL (1.0f / PIXELS_PER_METER) // this is 1 / PIXELS_PER_METER !
-
-#define METERS_TO_PIXELS(m) ((int) std::floor(PIXELS_PER_METER * m))
-#define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
+using namespace std;
 
 class PhysBall
 {
@@ -87,6 +85,9 @@ public:
     ~ModulePhysics();
 
     bool Init() override;
+	bool Start() override;
+	Update_Status PreUpdate() override;
+	Update_Status PostUpdate() override;
     bool CleanUp() override;
 
     void Move();
@@ -106,26 +107,26 @@ private:
     // Compute modulus of a vector
     float modulus(float vx, float vy);
 
+	// Detect collision between circle and rectangle
+	bool check_collision_circle_rectangle(float cx, float cy, float cr, float rx, float ry, float rw, float rh);
+
     // Compute Aerodynamic Drag force
-    void compute_aerodynamic_drag(float& fx, float& fy, const PhysBall& ball);
+    void compute_aerodynamic_drag(float& fx, float& fy, const PhysBall& ball, const Atmosphere& atmosphere);
 
     // Compute Hydrodynamic Drag force
-    void compute_hydrodynamic_drag(float& fx, float& fy, const PhysBall& ball);
+    void compute_hydrodynamic_drag(float& fx, float& fy, const PhysBall& ball, const Water& water);
 
     // Compute Hydrodynamic Buoyancy force
-    void compute_hydrodynamic_buoyancy(float& fx, float& fy, const PhysBall& ball);
+    void compute_hydrodynamic_buoyancy(float& fx, float& fy, const PhysBall& ball, const Water& water);
 
     // Integration scheme: Velocity Verlet
-    void integrator_velocity_verlet(PhysBall& ball);
+    void integrator_velocity_verlet(PhysBall& ball, float dt);
 
     // Detect collision with ground
-    bool is_colliding_with_ground(const PhysBall& ball);
+    bool is_colliding_with_ground(const PhysBall& ball, const Ground& ground);
 
     // Detect collision with water
-    bool is_colliding_with_water(const PhysBall& ball);
-
-    // Detect collision between circle and rectangle
-    bool check_collision_circle_rectangle(float cx, float cy, float cr, float rx, float ry, float rw, float rh);
+    bool is_colliding_with_water(const PhysBall& ball, const Water& water);
 };
 
 #endif // __MODULE_PHYSICS_H__
