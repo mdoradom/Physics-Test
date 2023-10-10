@@ -46,8 +46,8 @@ bool ModulePhysics::Start()
 
 	// Create atmosphere
 	atmosphere = Atmosphere();
-	atmosphere.windx = 0.0f; // [m/s]
-	atmosphere.windy = 0.0f; // [m/s]
+	atmosphere.windx = 10.0f; // [m/s]
+	atmosphere.windy = 5.0f; // [m/s]
 	atmosphere.density = 1.0f; // [kg/m^3]
 
 	// Create a ball
@@ -214,8 +214,8 @@ bool ModulePhysics::CleanUp()
 
 void ModulePhysics::ParabolicShot(PhysBall& ball, float angle, float initialSpeed)
 {
-	ball.vx = initialSpeed * cos(angle);
-	ball.vy = initialSpeed * sin(angle);
+	ball.vx = initialSpeed * cos(angle * (M_PI / 180));
+	ball.vy = initialSpeed * sin(angle * (M_PI / 180));
 }
 
 
