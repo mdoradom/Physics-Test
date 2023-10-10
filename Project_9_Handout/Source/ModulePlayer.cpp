@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include "ModulePhysics.h"
 
+#include "Globals.h"
+
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
 	// idle animation - just one sprite
@@ -97,80 +99,30 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_A] == Key_State::KEY_REPEAT)
 	{
-		// position.x -= speed;
-
-		if (speed > 2) {
-			speed--;
-		}
-		if (currentAnimation != &walkLeftAnim)
-		{
-			walkLeftAnim.Reset();
-			currentAnimation = &walkLeftAnim;
-		}
-
-		//App->physics->Move(position, -10000, speed, mass);
-		
+		launchSpeed--;
 	}
 
 	if (App->input->keys[SDL_SCANCODE_D] == Key_State::KEY_REPEAT)
 	{
-		
-		if (speed < 2) {
-			speed++;
-		}
-		if (currentAnimation != &walkRigtAnim)
-		{
-			walkRigtAnim.Reset();
-			currentAnimation = &walkRigtAnim;
-		}
-		
-		//App->physics->Move(position, 10000, speed, mass);
-
+		launchSpeed++;
 	}
-
-	/*
 
 	if (App->input->keys[SDL_SCANCODE_S] == Key_State::KEY_REPEAT)
 	{
-		position.y += speed;
-		if (currentAnimation != &downAnim)
-		{
-			downAnim.Reset();
-			currentAnimation = &downAnim;
-		}
+		launchAngle--;
 	}
 
 	if (App->input->keys[SDL_SCANCODE_W] == Key_State::KEY_REPEAT)
 	{
-		position.y -= speed;
-		if (currentAnimation != &upAnim)
-		{
-			upAnim.Reset();
-			currentAnimation = &upAnim;
-		}
+		launchAngle++;
 	}
-
-	*/
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-
-		/*
-		Particle* newParticle = App->particles->AddParticle(App->particles->laser, position.x + 20, position.y, Collider::Type::PLAYER_SHOT);
-		newParticle->collider->AddListener(this);
-		App->audio->PlayFx(laserFx);
-		*/
+		App->physics->ParabolicShot(App->physics->balls[0], launchAngle, launchSpeed);
 	}
 
-	
-	/*
-
-	// If no up/down movement detected, set the current animation back to idle
-	if (App->input->keys[SDL_SCANCODE_S] == Key_State::KEY_IDLE
-		&& App->input->keys[SDL_SCANCODE_W] == Key_State::KEY_IDLE)
-		currentAnimation = &idleAnim;
-
-	*/
+	App->render->DrawLineWithAngleAndSpeed(METERS_TO_PIXELS(App->physics->balls[0].x), SCREEN_HEIGHT - METERS_TO_PIXELS(App->physics->balls[0].y), launchSpeed, launchAngle, 255, 0, 0, 255);
 
 	collider->SetPos((float)position.x, (float)position.y);
 

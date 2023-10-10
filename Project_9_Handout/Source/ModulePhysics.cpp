@@ -46,8 +46,8 @@ bool ModulePhysics::Start()
 
 	// Create atmosphere
 	atmosphere = Atmosphere();
-	atmosphere.windx = 10.0f; // [m/s]
-	atmosphere.windy = 5.0f; // [m/s]
+	atmosphere.windx = 0.0f; // [m/s]
+	atmosphere.windy = 0.0f; // [m/s]
 	atmosphere.density = 1.0f; // [kg/m^3]
 
 	// Create a ball
@@ -67,15 +67,10 @@ bool ModulePhysics::Start()
 	ball.x = 2.0f;
 	ball.y = (ground.y + ground.h) + 2.0f;
 	ball.vx = 0.0f;
-	ball.vy = 0.0f;
+	ball.vy = 0.000001f; // SI NO PONES VELOCIDAD INICIAL NO SE MUESTRA LA BOLA 
 
 	// Add ball to the collection
 	balls.emplace_back(ball);
-
-	float launchAngle = 90.0f; // Launch angle in degrees
-	float initialSpeed = 10.0f; // Initial speed in m/s
-
-	ParabolicShot(balls[0], launchAngle, initialSpeed);
 
 	return true;
 }
