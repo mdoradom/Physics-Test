@@ -177,17 +177,20 @@ bool ModuleRender::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Ui
 	return ret;
 }
 
-bool ModuleRender::DrawLineWithAngleAndSpeed(int x, int y, float angle, float speed, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
+bool ModuleRender::DrawLineWithAngleAndSpeed(int x, int y, float angleDegrees, float speed, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
 {
 	bool ret = true;
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
+	// Convert angle from degrees to radians
+	float angleRadians = angleDegrees * (M_PI / 180.0f);
+
 	// Calculate the end coordinates based on the given angle and speed
-	int lineLength = static_cast<int>(speed * 10); // Adjust the multiplier as needed for the desired line length
-	int x2 = x + static_cast<int>(lineLength * cos(angle * (M_PI / 180.0f)));
-	int y2 = y - static_cast<int>(lineLength * sin(angle * (M_PI / 180.0f))); // Subtract for the correct direction on the Y-axis
+	int lineLength = static_cast<int>(speed); // Adjust the multiplier as needed for the desired line length
+	int x2 = x + static_cast<int>(lineLength * cos(angleRadians));
+	int y2 = y - static_cast<int>(lineLength * sin(angleRadians)); // Subtract for the correct direction on the Y-axis
 
 	int result = -1;
 
@@ -204,6 +207,7 @@ bool ModuleRender::DrawLineWithAngleAndSpeed(int x, int y, float angle, float sp
 
 	return ret;
 }
+
 
 
 
