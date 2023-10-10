@@ -91,7 +91,7 @@ public:
     bool CleanUp() override;
 
     void Move();
-    void ParabolicShot(float mass, float angle);
+    void ParabolicShot(PhysBall& ball, float angle, float initialSpeed);
 
     // Physics objects
     std::vector<PhysBall> balls;

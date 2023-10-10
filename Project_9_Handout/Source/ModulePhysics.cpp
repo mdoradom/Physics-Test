@@ -46,8 +46,8 @@ bool ModulePhysics::Start()
 
 	// Create atmosphere
 	atmosphere = Atmosphere();
-	atmosphere.windx = 10.0f; // [m/s]
-	atmosphere.windy = 5.0f; // [m/s]
+	atmosphere.windx = 0.0f; // [m/s]
+	atmosphere.windy = 0.0f; // [m/s]
 	atmosphere.density = 1.0f; // [kg/m^3]
 
 	// Create a ball
@@ -66,11 +66,16 @@ bool ModulePhysics::Start()
 	// Set initial position and velocity of the ball
 	ball.x = 2.0f;
 	ball.y = (ground.y + ground.h) + 2.0f;
-	ball.vx = 5.0f;
-	ball.vy = 10.0f;
+	ball.vx = 0.0f;
+	ball.vy = 0.0f;
 
 	// Add ball to the collection
 	balls.emplace_back(ball);
+
+	float launchAngle = 90.0f; // Launch angle in degrees
+	float initialSpeed = 10.0f; // Initial speed in m/s
+
+	ParabolicShot(balls[0], launchAngle, initialSpeed);
 
 	return true;
 }
@@ -207,6 +212,15 @@ bool ModulePhysics::CleanUp()
 	return true;
 }
 
+void ModulePhysics::ParabolicShot(PhysBall& ball, float angle, float initialSpeed)
+{
+	ball.vx = initialSpeed * cos(angle);
+	ball.vy = initialSpeed * sin(angle);
+}
+
+
+// OLD FUNCTIONS
+
 /*
 void ModulePhysics::Move(fPoint position, float force, float acceleration, float mass) {
 
@@ -320,6 +334,7 @@ bool ModulePhysics::is_colliding_with_water(const PhysBall& ball, const Water& w
 	float rect_y = (water.y + water.h / 2.0f); // Center of rectangle
 	return check_collision_circle_rectangle(ball.x, ball.y, ball.radius, rect_x, rect_y, water.w, water.h);
 }
+
 
 // Convert from meters to pixels (for SDL drawing)
 SDL_Rect Ground::pixels()
