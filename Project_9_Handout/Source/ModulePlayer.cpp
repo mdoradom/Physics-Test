@@ -200,22 +200,7 @@ Update_Status ModulePlayer::PostUpdate()
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c2->type == Collider::Type::WALL && destroyed == false) { position.y = 162; }
+
+	//if the player hitbox collides with the portal hitbox the player will be teleported to the other portal
 	if (c2->type == Collider::Type::PORTAL && destroyed == false) { position.y = 162; position.x = 325; }
-	//{
-	//	App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE, 9);
-	//	App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE, 14);
-	//	App->particles->AddParticle(App->particles->explosion, position.x - 7, position.y + 12, Collider::Type::NONE, 40);
-	//	App->particles->AddParticle(App->particles->explosion, position.x + 5, position.y - 5, Collider::Type::NONE, 28);
-	//	App->particles->AddParticle(App->particles->explosion, position.x - 4, position.y - 4, Collider::Type::NONE, 21);
-
-	//	App->audio->PlayFx(explosionFx);
-	//	App->fade->FadeToBlack((Module*)App->sceneLevel_1, (Module*)App->sceneIntro, 60);
-
-	//	destroyed = true;
-	//}
-
-	//if (c1->type == Collider::Type::PLAYER_SHOT && c2->type == Collider::Type::ENEMY)
-	//{
-	//	score += 23;
-	//}
 }

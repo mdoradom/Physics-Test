@@ -10,6 +10,7 @@
 
 SceneLevel1::SceneLevel1(bool startEnabled) : Module(startEnabled)
 {
+	//portal animations
 	idlePortalAnim.PushBack({ 0, 0, 64, 64 });
 	idlePortalAnim.PushBack({ 64, 0, 64, 64 });
 	idlePortalAnim.PushBack({ 128, 0, 64, 64 });
@@ -71,8 +72,8 @@ Update_Status SceneLevel1::PostUpdate()
 	// Draw everything --------------------------------------
 	App->render->Blit(bgTexture, 0, 0, NULL);
 	App->render->Blit(grassTexture, 0, 221, NULL);
-	App->render->Blit(plantTexture, 280, 221, NULL);
 
+	//Add the portal animations
 	SDL_Rect greenPortalRect = currentPortalAnimation->GetCurrentFrame();
 	App->render->Blit(greenPortalTexture, 0, 160, &greenPortalRect);
 	SDL_Rect purplePortalRect = currentPortalAnimation->GetCurrentFrame();
