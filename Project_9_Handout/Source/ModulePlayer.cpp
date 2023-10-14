@@ -122,7 +122,7 @@ Update_Status ModulePlayer::Update()
 		App->physics->ParabolicShot(App->physics->balls[0], launchAngle, launchSpeed);
 	}
 
-	App->render->DrawLineWithAngleAndSpeed(METERS_TO_PIXELS(App->physics->balls[0].x), SCREEN_HEIGHT - METERS_TO_PIXELS(App->physics->balls[0].y), launchSpeed, launchAngle, 255, 0, 0, 255);
+	App->render->DrawLineWithAngleAndSpeed(METERS_TO_PIXELS(App->physics->balls[0].x), SCREEN_HEIGHT - METERS_TO_PIXELS(App->physics->balls[0].y), launchAngle, launchSpeed , 255, 0, 0, 255);
 
 	collider->SetPos((float)position.x, (float)position.y);
 
