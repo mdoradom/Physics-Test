@@ -134,17 +134,19 @@ Update_Status ModulePlayer::PostUpdate()
 
 	if (debug) {
 
+		std::string deltaTime = "deltaTime: " + std::to_string((float)App->physics->dt) + " ms";
 		std::string angleString = "launchAngle: " + std::to_string((int)launchAngle) + " degrees";
 		std::string initialSpeedString = "launchSpeed: " + std::to_string((int)App->player->launchSpeed) + " m/s";
-		
-		App->fonts->drawText(angleString.c_str(), { 255,255,255 }, (SCREEN_WIDTH/2) - 20, 50);
-		App->fonts->drawText(initialSpeedString.c_str(), { 255,255,255 }, (SCREEN_WIDTH/2) - 20, 75);
 		PhysBall* lastBall = &App->physics->balls.back();
 		std::string lastBallInfo = "Ball Info = "
 			"Pos: (" + std::to_string((int)lastBall->x) + ", " + std::to_string((int)lastBall->y) + ")"
 			" | Vel: (" + std::to_string((int)lastBall->vx) + ", " + std::to_string((int)lastBall->vy) + ")"
-			" | Accel: (" + std::to_string((int)lastBall->ax) + ", " + std::to_string((int)lastBall->ay) + ")";
-		App->fonts->drawText(lastBallInfo.c_str(), { 255,255,255 }, (SCREEN_WIDTH/2)-20, 100);
+			" | Accel: (" + std::to_string((float)lastBall->ax) + ", " + std::to_string((float)lastBall->ay) + ")";
+		
+		App->fonts->drawText(deltaTime.c_str(), { 255,255,255 }, 20, 50);
+		App->fonts->drawText(angleString.c_str(), { 255,255,255 }, 20, 75);
+		App->fonts->drawText(initialSpeedString.c_str(), { 255,255,255 }, 20, 100);
+		App->fonts->drawText(lastBallInfo.c_str(), { 255,255,255 }, 20, 125);
 
 	}
 
