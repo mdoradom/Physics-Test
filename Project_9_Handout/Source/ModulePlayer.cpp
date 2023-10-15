@@ -15,6 +15,8 @@
 
 #include "Globals.h"
 
+#include <string>
+
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
 	// idle animation - just one sprite
@@ -61,8 +63,9 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	texture = App->textures->Load("Assets/Sprites/gatita.png");
+	texture = App->textures->Load("Assets/Sprites/gatita.pngg");
 	currentAnimation = &idleAnim;
+	
 
 	laserFx = App->audio->LoadFx("Assets/Fx/laser.wav");
 	explosionFx = App->audio->LoadFx("Assets/Fx/explosion.wav");
@@ -74,12 +77,6 @@ bool ModulePlayer::Start()
 
 	collider = App->collisions->AddCollider({ (int)position.x, (int)position.y, 64, 64 }, Collider::Type::PLAYER, this);
 
-	// TODO 0: Notice how a font is loaded and the meaning of all its arguments 
-	char lookupTable[] = { "!  ,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz" };
-	scoreFont = App->fonts->Load("Assets/Fonts/rtype_font.png", "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz", 1);
-
-	// TODO 4: Try loading "rtype_font3.png" that has two rows to test if all calculations are correct
-
 	return ret;
 }
 
@@ -87,14 +84,6 @@ Update_Status ModulePlayer::Update()
 {
 	// Moving the player with the camera scroll
 	// App->player->position.x += 1;
-
-	/*
-	if (speed > 0) {
-		App->physics->Move(position, 0, speed - 10, mass);
-	}
-	*/
-
-	//App->physics->ParabolicShot(position, mass, 90.0);
 	
 
 	if (App->input->keys[SDL_SCANCODE_A] == Key_State::KEY_REPEAT)
@@ -122,6 +111,10 @@ Update_Status ModulePlayer::Update()
 		App->physics->ParabolicShot(App->physics->balls[0], launchAngle, launchSpeed);
 	}
 
+	if (App->input->keys[SDL_SCANCODE_F1] == Key_State::KEY_DOWN) {
+		debug = !debug;
+	}
+
 	App->render->DrawLineWithAngleAndSpeed(METERS_TO_PIXELS(App->physics->balls[0].x), SCREEN_HEIGHT - METERS_TO_PIXELS(App->physics->balls[0].y), launchAngle, launchSpeed , 255, 0, 0, 255);
 
 	collider->SetPos((float)position.x, (float)position.y);
@@ -139,34 +132,26 @@ Update_Status ModulePlayer::PostUpdate()
 		App->render->Blit(texture, position.x, position.y, &rect);
 	}
 
-	// Draw UI (score) --------------------------------------
-	sprintf_s(scoreText, 10, "%7d", score);
+	if (debug) {
 
-	// TODO 3: Blit the text of the score at the bottom of the screen
+		std::string angleString = "launchAngle: " + std::to_string((int)launchAngle) + " degrees";
+		std::string initialSpeedString = "launchSpeed: " + std::to_string((int)App->player->launchSpeed) + " m/s";
+		
+		App->fonts->drawText(angleString.c_str(), { 255,255,255 }, (SCREEN_WIDTH/2) - 20, 50);
+		App->fonts->drawText(initialSpeedString.c_str(), { 255,255,255 }, (SCREEN_WIDTH/2) - 20, 75);
+		PhysBall* lastBall = &App->physics->balls.back();
+		std::string lastBallInfo = "Ball Info = "
+			"Pos: (" + std::to_string((int)lastBall->x) + ", " + std::to_string((int)lastBall->y) + ")"
+			" | Vel: (" + std::to_string((int)lastBall->vx) + ", " + std::to_string((int)lastBall->vy) + ")"
+			" | Accel: (" + std::to_string((int)lastBall->ax) + ", " + std::to_string((int)lastBall->ay) + ")";
+		App->fonts->drawText(lastBallInfo.c_str(), { 255,255,255 }, (SCREEN_WIDTH/2)-20, 100);
 
-	App->fonts->BlitText((SCREEN_WIDTH/2), 10, scoreFont, scoreText);
+	}
 
 	return Update_Status::UPDATE_CONTINUE;
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
-	//if (c1 == collider && destroyed == false)
-	//{
-	//	App->particles->AddParticle(App->particles->explosion, position.x, position.y, Collider::Type::NONE, 9);
-	//	App->particles->AddParticle(App->particles->explosion, position.x + 8, position.y + 11, Collider::Type::NONE, 14);
-	//	App->particles->AddParticle(App->particles->explosion, position.x - 7, position.y + 12, Collider::Type::NONE, 40);
-	//	App->particles->AddParticle(App->particles->explosion, position.x + 5, position.y - 5, Collider::Type::NONE, 28);
-	//	App->particles->AddParticle(App->particles->explosion, position.x - 4, position.y - 4, Collider::Type::NONE, 21);
 
-	//	App->audio->PlayFx(explosionFx);
-	//	App->fade->FadeToBlack((Module*)App->sceneLevel_1, (Module*)App->sceneIntro, 60);
-
-	//	destroyed = true;
-	//}
-
-	//if (c1->type == Collider::Type::PLAYER_SHOT && c2->type == Collider::Type::ENEMY)
-	//{
-	//	score += 23;
-	//}
 }

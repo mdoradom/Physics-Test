@@ -35,7 +35,7 @@ bool SceneLevel1::Start()
 	App->audio->PlayMusic("Assets/Music/stage1.ogg", 1.0f);
 
 	// Add colliders
-	App->collisions->AddCollider({ 0, 221, 3930, 16 }, Collider::Type::WALL);
+	//App->collisions->AddCollider({ 0, 221, 3930, 16 }, Collider::Type::WALL);
 	currentAnimation = &plantAnim;
 
 	// Remder camear
