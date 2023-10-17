@@ -57,6 +57,10 @@ class Ground : public SDL_Rect {
 		SDL_Rect pixels(); // Convert geometry to pixels to draw w/ SDL
 };
 
+// Class: Square
+class Square : public Ground {
+};
+
 // Class: Water
 class Water : public Ground
 {
@@ -98,6 +102,7 @@ public:
     Atmosphere atmosphere;
     Ground ground;
     Water water;
+	Square square;
 
     // Misc
     const float GRAVITY = -9.81;
@@ -124,6 +129,9 @@ private:
 
     // Detect collision with ground
     bool is_colliding_with_ground(const PhysBall& ball, const Ground& ground);
+
+	// Detect collision with the square
+	bool is_colliding_with_square(const PhysBall& ball, const Square& square);
 
     // Detect collision with water
     bool is_colliding_with_water(const PhysBall& ball, const Water& water);

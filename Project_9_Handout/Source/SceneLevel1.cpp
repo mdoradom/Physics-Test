@@ -8,6 +8,7 @@
 #include "ModuleEnemies.h"
 #include "ModulePlayer.h"
 #include "ModulePhysics.h"
+#include "ModuleWindow.h"
 #include "Globals.h"
 
 SceneLevel1::SceneLevel1(bool startEnabled) : Module(startEnabled)
@@ -22,6 +23,7 @@ SceneLevel1::~SceneLevel1()
 // Load assets
 bool SceneLevel1::Start()
 {
+	SDL_Renderer* rendererSquare = NULL;
 
 	App->physics->Enable();
 
@@ -36,7 +38,6 @@ bool SceneLevel1::Start()
 
 	// Add colliders
 	//App->collisions->AddCollider({ 0, 221, 3930, 16 }, Collider::Type::WALL);
-	currentAnimation = &plantAnim;
 
 	// Remder camear
 	App->render->camera.x = 0;

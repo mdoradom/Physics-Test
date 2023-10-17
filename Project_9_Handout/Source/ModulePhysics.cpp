@@ -31,15 +31,22 @@ bool ModulePhysics::Start()
 	ground = Ground();
 	ground.x = 0.0f; // [m]
 	ground.y = 0.0f; // [m]
-	ground.w = 30.0f; // [m]
+	ground.w = 40.0f; // [m]
 	ground.h = 5.0f; // [m]
+
+	// Create square
+	square = Square();
+	square.x = 30.0f; // [m]
+	square.y = 5.0f; // [m]
+	square.w = 3.0f; // [m]
+	square.h = 3.0f; // [m]
 
 	// Create Water
 	water = Water();
-	water.x = ground.x + ground.w; // Start where ground ends [m]
+	water.x = 0.0f; // Start where ground ends [m]
 	water.y = 0.0f; // [m]
-	water.w = 30.0f; // [m]
-	water.h = 5.0f; // [m]
+	water.w = 0.0f; // [m]
+	water.h = 0.0f; // [m]
 	water.density = 50.0f; // [kg/m^3]
 	water.vx = -1.0f; // [m/s]
 	water.vy = 0.0f; // [m/s]
@@ -98,7 +105,7 @@ Update_Status ModulePhysics::PreUpdate()
 
 		// Gravity force
 		float fgx = ball.mass * 0.0f;
-		float fgy = ball.mass * -10.0f; // Let's assume gravity is constant and downwards
+		float fgy = ball.mass * GRAVITY; // Let's assume gravity is constant and downwards
 		ball.fx += fgx; ball.fy += fgy; // Add this force to ball's total force
 
 		// Aerodynamic Drag force (only when not in water)
@@ -153,6 +160,19 @@ Update_Status ModulePhysics::PreUpdate()
 
 			// FUYM non-elasticity
 			ball.vx *= ball.coef_friction;
+			ball.vy *= ball.coef_restitution; 
+		}
+
+		if (is_colliding_with_square(ball, square))
+		{
+			// TP ball to ground surface
+			ball.y = ground.y + ground.h + ball.radius;
+
+			// Elastic bounce with ground
+			ball.vy = -ball.vy;
+
+			// FUYM non-elasticity
+			ball.vx *= ball.coef_friction;
 			ball.vy *= ball.coef_restitution;
 		}
 	}
@@ -195,6 +215,15 @@ Update_Status ModulePhysics::PostUpdate()
 
 		// Draw ball
 		App->render->DrawCircle(pos_x, pos_y, size_r, color_r, color_g, color_b);
+
+		// Draw square
+		if (is_colliding_with_square(ball, square)) {
+			color_r = 255; color_g = 0; color_b = 0;
+		}
+		else {
+			color_r = 255; color_g = 0; color_b = 255;
+		}
+		App->render->DrawQuad(square.pixels(), color_r, color_g, color_b, 255);
 
 	}
 
@@ -320,6 +349,14 @@ bool ModulePhysics::is_colliding_with_ground(const PhysBall& ball, const Ground&
 	float rect_x = (ground.x + ground.w / 2.0f); // Center of rectangle
 	float rect_y = (ground.y + ground.h / 2.0f); // Center of rectangle
 	return check_collision_circle_rectangle(ball.x, ball.y, ball.radius, rect_x, rect_y, ground.w, ground.h);
+}
+
+// Detect collision with square
+bool ModulePhysics::is_colliding_with_square(const PhysBall& ball, const Square& square)
+{
+	float rect_x = (square.x + square.w / 2.0f); // Center of rectangle
+	float rect_y = (square.y + square.h / 2.0f); // Center of rectangle
+	return check_collision_circle_rectangle(ball.x, ball.y, ball.radius, rect_x, rect_y, square.w, square.h);
 }
 
 // Detect collision with water
