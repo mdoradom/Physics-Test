@@ -102,7 +102,7 @@ public:
     Atmosphere atmosphere;
     Ground ground;
     Water water;
-	Square square;
+	Square topSquare, leftSquare, rightSquare, downSquare;
 
     // Misc
     const float GRAVITY = -9.81;
@@ -130,8 +130,8 @@ private:
     // Detect collision with ground
     bool is_colliding_with_ground(const PhysBall& ball, const Ground& ground);
 
-	// Detect collision with the square
-	bool is_colliding_with_square(const PhysBall& ball, const Square& square);
+	// Detect collision with square
+    bool is_colliding_with_square(const PhysBall& ball, const Square& square);
 
     // Detect collision with water
     bool is_colliding_with_water(const PhysBall& ball, const Water& water);
