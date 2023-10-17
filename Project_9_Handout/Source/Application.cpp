@@ -52,6 +52,11 @@ Application::~Application()
 	}
 }
 
+bool Application::Awake()
+{
+	maxFrameDuration = configFile.child("config").child("app").child("maxFrameDuration").attribute("value").as_int();
+}
+
 bool Application::Init()
 {
 	bool ret = true;
@@ -64,12 +69,17 @@ bool Application::Init()
 	for (int i = 0; i < NUM_MODULES && ret; ++i)
 		ret = modules[i]->IsEnabled() ? modules[i]->Start() : true;
 
+
+
 	return ret;
 }
 
 Update_Status Application::Update()
 {
+
 	Update_Status ret = Update_Status::UPDATE_CONTINUE;
+
+
 
 	for (int i = 0; i < NUM_MODULES && ret == Update_Status::UPDATE_CONTINUE; ++i)
 		ret = modules[i]->IsEnabled() ? modules[i]->PreUpdate() : Update_Status::UPDATE_CONTINUE;
@@ -79,6 +89,8 @@ Update_Status Application::Update()
 
 	for (int i = 0; i < NUM_MODULES && ret == Update_Status::UPDATE_CONTINUE; ++i)
 		ret = modules[i]->IsEnabled() ? modules[i]->PostUpdate() : Update_Status::UPDATE_CONTINUE;
+
+	
 
 	return ret;
 }

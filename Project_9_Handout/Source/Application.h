@@ -1,7 +1,7 @@
 #ifndef __APPLICATION_H__
 #define __APPLICATION_H__
 
-#include "Globals.h"
+#include "Module.h"
 
 #define NUM_MODULES 14
 
@@ -31,6 +31,9 @@ public:
 
 	//Destructor. Removes all module objects
 	~Application();
+
+	// Called before render is available
+	bool Awake();
 
 	//Initializes all modules
 	bool Init();
@@ -66,6 +69,12 @@ public:
 	ModuleRender* render = nullptr;
 
 	ModulePhysics* physics = nullptr;
+
+private:
+
+	float avFPS = 0.0f;
+	uint seconds;
+
 };
 
 // Global var made extern for Application ---
