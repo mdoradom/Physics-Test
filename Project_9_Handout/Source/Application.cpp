@@ -52,10 +52,12 @@ Application::~Application()
 	}
 }
 
-bool Application::Awake()
-{
-	maxFrameDuration = configFile.child("config").child("app").child("maxFrameDuration").attribute("value").as_int();
-}
+//bool Application::Awake()
+//{
+//	//maxFrameDuration = configFile.child("config").child("app").child("maxFrameDuration").attribute("value").as_int();
+//
+//	
+//}
 
 bool Application::Init()
 {
