@@ -80,6 +80,13 @@ private:
 
 	float avFPS = 0.0f;
 	uint seconds;
+	SString gameTitle;
+
+	//Load config file
+	bool LoadConfig();
+
+	uint frames;
+	float dt;
 
 };
 
