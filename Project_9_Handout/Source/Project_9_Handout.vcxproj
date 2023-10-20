@@ -74,6 +74,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\citm_desvj_project_template\Game\Source\List.h" />
+    <ClInclude Include="..\..\..\citm_desvj_project_template\Game\Source\PerfTimer.h" />
+    <ClInclude Include="..\..\..\citm_desvj_project_template\Game\Source\Timer.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Collider.h" />
@@ -103,6 +106,8 @@
     <ClInclude Include="Path.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\citm_desvj_project_template\Game\Source\PerfTimer.cpp" />
+    <ClCompile Include="..\..\..\citm_desvj_project_template\Game\Source\Timer.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Enemy.cpp" />
