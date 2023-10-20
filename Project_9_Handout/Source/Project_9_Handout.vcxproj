@@ -104,6 +104,7 @@
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Path.h" />
+    <ClInclude Include="SString.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\citm_desvj_project_template\Game\Source\PerfTimer.cpp" />

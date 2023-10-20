@@ -118,6 +118,9 @@
     <ClInclude Include="..\..\..\citm_desvj_project_template\Game\Source\List.h">
       <Filter>Source Files\Application</Filter>
     </ClInclude>
+    <ClInclude Include="SString.h">
+      <Filter>Source Files\Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Module.cpp">
