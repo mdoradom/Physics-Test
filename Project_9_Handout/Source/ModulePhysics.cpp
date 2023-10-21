@@ -209,7 +209,7 @@ Update_Status ModulePhysics::PreUpdate()
 		}
 		else if (is_colliding_with_square(ball, leftSquare)) {
 			// TP ball to ground surface
-			ball.x = leftSquare.x - leftSquare.w + ball.radius;
+			ball.x = leftSquare.x - (leftSquare.w/2) + ball.radius;
 
 			// Elastic bounce with ground
 			ball.vx = -ball.vx;
@@ -220,7 +220,7 @@ Update_Status ModulePhysics::PreUpdate()
 		}
 		else if (is_colliding_with_square(ball, rightSquare)) {
 			// TP ball to ground surface
-			ball.x = rightSquare.x + rightSquare.w + ball.radius;
+			ball.x = rightSquare.x + rightSquare.w - ball.radius;
 
 			// Elastic bounce with ground
 			ball.vx = -ball.vx;
