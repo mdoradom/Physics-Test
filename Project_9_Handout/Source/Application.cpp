@@ -18,15 +18,7 @@
 
 Application::Application()
 {
-	//Measurements
-	Timer timer = Timer();
-	startupTime = Timer();
-	frameTime = PerfTimer();
-	lastSecFrameTime = PerfTimer();
 
-	frames = 0;
-
-	
 	// The order in which the modules are added is very important.
 	// It will define the order in which Pre/Update/Post will be called
 	// Render should always be last, as our last action should be updating the screen
@@ -48,6 +40,15 @@ Application::Application()
 	modules[11] =	fade =			new ModuleFadeToBlack(true);
 	modules[12] =	render =		new ModuleRender(true);
 	modules[13] =	fonts =			new ModuleFonts(true);
+
+	//Measurements
+	Timer timer = Timer();
+	startupTime = Timer();
+	frameTime = PerfTimer();
+	lastSecFrameTime = PerfTimer();
+
+	frames = 0;
+
 }
 
 Application::~Application()
@@ -81,16 +82,16 @@ bool Application::Awake()
 		ListItem<Module*>* item;
 		item = modules.start;
 
-		//while (item != NULL && ret == true)
-		//{
-		//	// L04: DONE 4: Add a new argument to the Awake method to receive a pointer to an xml node.
-		//	// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
-		//	// that can be used to read all variables for that module.
-		//	// Send nullptr if the node does not exist in config.xml
+		while (item != NULL && ret == true)
+		{
+			// L04: DONE 4: Add a new argument to the Awake method to receive a pointer to an xml node.
+			// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
+			// that can be used to read all variables for that module.
+			// Send nullptr if the node does not exist in config.xml
 
-		//	ret = item->data->Awake(configFile.child("config").child(item->data->name.GetString()));
-		//	item = item->next;
-		//}
+			ret = item->data->Awake(configFile.child("config").child(item->data->name.GetString()));
+			item = item->next;
+		}
 	}
 
 	LOG("Timer App Awake(): %f", timer.ReadMSec());
