@@ -80,6 +80,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="Defs.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy_BrownShip.h" />
     <ClInclude Include="Enemy_Mech.h" />

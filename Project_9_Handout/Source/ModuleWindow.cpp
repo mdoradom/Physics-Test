@@ -39,7 +39,8 @@ bool ModuleWindow::Init()
 		if (WIN_FULLSCREEN_DESKTOP == true)
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
-		window = SDL_CreateWindow("Ejercicio 4", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE, flags);
+		//window = SDL_CreateWindow("Ejercicio 4 lalala", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE, flags);
+		window = SDL_CreateWindow(App->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE /*width, height*/, flags);
 
 		if (window == nullptr)
 		{
@@ -67,6 +68,14 @@ bool ModuleWindow::CleanUp()
 	SDL_Quit();
 
 	return true;
+}
+
+
+// Set new window title
+void ModuleWindow::SetTitle(const char* new_title)
+{
+	//title.create(new_title);
+	SDL_SetWindowTitle(window, new_title);
 }
 
 

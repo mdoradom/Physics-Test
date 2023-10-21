@@ -121,6 +121,9 @@
     <ClInclude Include="SString.h">
       <Filter>Source Files\Application</Filter>
     </ClInclude>
+    <ClInclude Include="Defs.h">
+      <Filter>Source Files\Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Module.cpp">

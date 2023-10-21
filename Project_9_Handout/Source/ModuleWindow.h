@@ -24,6 +24,15 @@ public:
 	// Destroys the window and uninitializes the SDL library
 	bool CleanUp() override;
 
+	// Change title
+	void SetTitle(const char* title);
+
+	//// Retrive window size
+	//void GetWindowSize(uint& width, uint& height) const;
+
+	//// Retrieve window scale
+	//uint GetScale() const;
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window = nullptr;

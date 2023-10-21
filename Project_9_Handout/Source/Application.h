@@ -51,6 +51,8 @@ public:
 	//Releases all the application data
 	bool CleanUp();
 
+	const char* GetTitle() const;
+
 public:
 	// An array to store all modules
 	Module* modules[NUM_MODULES];
@@ -82,13 +84,34 @@ private:
 	float avFPS = 0.0f;
 	uint seconds;
 	SString gameTitle;
+	SString organization;
+
+	List<Module*> modules;
 
 	//Load config file
 	bool LoadConfig();
 
+
+	//xml_document to store the config file
+	pugi::xml_document configFile;
+
 	uint frames;
 	float dt;
 
+	//Required variables to calculate timing measures
+	Timer startupTime;
+	PerfTimer frameTime;
+	PerfTimer lastSecFrameTime;
+
+	uint frameCount = 0;
+	uint framesPerSecond = 0;
+	uint32 lastSecFrameCount = 0;
+
+	float averageFps = 0.0f;
+	uint32 secondsSinceStartup = 0;
+
+	//Consultar - Set max frame duration
+	uint32 maxFrameDuration = 16;
 };
 
 // Global var made extern for Application ---
