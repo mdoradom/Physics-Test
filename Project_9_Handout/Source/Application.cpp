@@ -82,6 +82,38 @@ Update_Status Application::Update()
 
 	return ret;
 }
+
+void Application::LimitFPS(int maxFPS)
+{
+	static Uint32 lastTime = 0;
+	Uint32 currentTime = SDL_GetTicks();
+	Uint32 targetDelay = 1000 / maxFPS;
+
+	if (currentTime - lastTime < targetDelay)
+	{
+		Uint32 delay = targetDelay - (currentTime - lastTime);
+		SDL_Delay(delay);
+	}
+
+	lastTime = SDL_GetTicks();
+}
+
+float Application::GetCurrentFPS()
+{
+	static Uint32 prevTime = SDL_GetTicks();
+	static int frameCount = 0;
+	Uint32 currentTime = SDL_GetTicks();
+	float deltaTime = static_cast<float>(currentTime - prevTime) / 1000.0f; // Convert to seconds
+
+	frameCount++;
+
+
+	float fps = static_cast<float>(frameCount) / deltaTime;
+	frameCount = 0;
+	prevTime = currentTime;
+	return fps;
+}
+
  
 bool Application::CleanUp()
 {

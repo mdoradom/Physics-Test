@@ -115,6 +115,11 @@ Update_Status ModulePlayer::Update()
 		debug = !debug;
 	}
 
+	if (App->input->keys[SDL_SCANCODE_E] == Key_State::KEY_REPEAT)
+	{
+		App->LimitFPS(30);
+	}
+
 	App->render->DrawLineWithAngleAndSpeed(METERS_TO_PIXELS(App->physics->balls[0].x), SCREEN_HEIGHT - METERS_TO_PIXELS(App->physics->balls[0].y), launchAngle, launchSpeed , 255, 0, 0, 255);
 
 	collider->SetPos((float)position.x, (float)position.y);
@@ -137,11 +142,13 @@ Update_Status ModulePlayer::PostUpdate()
 		std::string deltaTime = "deltaTime: " + std::to_string((float)App->physics->dt) + " ms";
 		std::string angleString = "launchAngle: " + std::to_string((int)launchAngle) + " degrees";
 		std::string initialSpeedString = "launchSpeed: " + std::to_string((int)App->player->launchSpeed) + " m/s";
+
 		PhysBall* lastBall = &App->physics->balls.back();
 		std::string lastBallInfo = "Ball Info = "
 			"Pos: (" + std::to_string((int)lastBall->x) + ", " + std::to_string((int)lastBall->y) + ")"
 			" | Vel: (" + std::to_string((int)lastBall->vx) + ", " + std::to_string((int)lastBall->vy) + ")"
-			" | Accel: (" + std::to_string((float)lastBall->ax) + ", " + std::to_string((float)lastBall->ay) + ")";
+			" | Accel: (" + std::to_string((float)lastBall->ax) + ", " + std::to_string((float)lastBall->ay) + ")"
+			" | FPS: (" + std::to_string((float)App->GetCurrentFPS()) + ")";
 		
 		App->fonts->drawText(deltaTime.c_str(), { 255,255,255 }, 20, 50);
 		App->fonts->drawText(angleString.c_str(), { 255,255,255 }, 20, 75);

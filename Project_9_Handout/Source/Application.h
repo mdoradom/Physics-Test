@@ -38,6 +38,10 @@ public:
 	//Updates all modules (PreUpdate, Update and PostUpdate)
 	Update_Status Update();
 
+	void LimitFPS(int maxFPS);
+
+	float GetCurrentFPS();
+
 	//Releases all the application data
 	bool CleanUp();
 
