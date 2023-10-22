@@ -2,6 +2,9 @@
 #define __APPLICATION_H__
 
 #include "Globals.h"
+#include "PerfTimer.h"
+#include "Timer.h"
+#include <string>
 
 #define NUM_MODULES 14
 
@@ -24,6 +27,26 @@ class ModulePhysics;
 class Application
 {
 
+private:
+	string gameTitle;
+
+	uint frames;
+	float dt;
+
+	Timer startupTime;
+	PerfTimer frameTime;
+	PerfTimer lastSecFrameTime;
+
+	uint64 frameCount = 0;
+	uint32 framesPerSecond = 0;
+	uint32 lastSecFrameCount = 0;
+
+	float averageFps = 0.0f;
+	uint32 secondsSinceStartup = 0;
+
+	//L02 DONE 1: Set the maximun frame duration in miliseconds.
+	uint32 maxFrameDuration = 16;
+
 public:
 
 	//Constructor. Creates all necessary modules for the application
@@ -37,6 +60,9 @@ public:
 
 	//Updates all modules (PreUpdate, Update and PostUpdate)
 	Update_Status Update();
+
+	//Call modules before each loop iteration
+	void FinishUpdate();
 
 	//Releases all the application data
 	bool CleanUp();

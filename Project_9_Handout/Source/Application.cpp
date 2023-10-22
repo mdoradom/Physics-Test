@@ -15,6 +15,9 @@
 #include "ModuleFonts.h"
 #include "ModuleRender.h"
 #include "ModulePhysics.h"
+#include "PerfTimer.h"
+#include "Timer.h"
+
 
 Application::Application()
 {
@@ -80,7 +83,57 @@ Update_Status Application::Update()
 	for (int i = 0; i < NUM_MODULES && ret == Update_Status::UPDATE_CONTINUE; ++i)
 		ret = modules[i]->IsEnabled() ? modules[i]->PostUpdate() : Update_Status::UPDATE_CONTINUE;
 
+
 	return ret;
+}
+
+void Application::FinishUpdate()
+{
+	// This is a good place to call Load / Save functions
+
+	// L02: DONE 1: Cap the framerate of the gameloop
+	// L02: DONE 2: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
+
+	double currentDt = frameTime.ReadMs();
+	if (maxFrameDuration > 0 && currentDt < maxFrameDuration) {
+		uint32 delay = (uint32)(maxFrameDuration - currentDt);
+
+		PerfTimer delayTimer = PerfTimer();
+		SDL_Delay(delay);
+		//LOG("We waited for %I32u ms and got back in %f ms",delay,delayTimer.ReadMs());
+	}
+
+
+	// L1: DONE 4: Calculate:
+	// Amount of frames since startup
+	frameCount++;
+
+	// Amount of time since game start (use a low resolution timer)
+	secondsSinceStartup = startupTime.ReadSec();
+
+	// Amount of ms took the last update (dt)
+	dt = (float)frameTime.ReadMs();
+
+	// Amount of frames during the last second
+	lastSecFrameCount++;
+
+	// Average FPS for the whole game life
+	if (lastSecFrameTime.ReadMs() > 1000) {
+		lastSecFrameTime.Start();
+		averageFps = (averageFps + lastSecFrameCount) / 2;
+		framesPerSecond = lastSecFrameCount;
+		lastSecFrameCount = 0;
+	}
+
+
+	// Shows the time measurements in the window title
+	// check sprintf formats here https://cplusplus.com/reference/cstdio/printf/
+	static char title[256];
+	sprintf_s(title, 256, "%s: Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %I32u Frame Count: %I64u ",
+		gameTitle.GetString(), averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
+
+	App->window.
+	Application->window->SetTitle(title);
 }
  
 bool Application::CleanUp()
