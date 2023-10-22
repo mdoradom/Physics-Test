@@ -24,7 +24,7 @@ bool SceneIntro::Start()
 	bool ret = true;
 
 	bgTexture = App->textures->Load("Assets/Sprites/ini_uwu3.png");
-	App->audio->PlayMusic("Assets/Music/introTitle.ogg", 1.0f);
+	//App->audio->PlayMusic("Assets/Music/introTitle.ogg", 1.0f);
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;

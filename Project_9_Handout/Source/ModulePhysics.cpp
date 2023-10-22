@@ -37,30 +37,30 @@ bool ModulePhysics::Start()
 	// Create topSquare
 	topSquare = Square();
 	topSquare.x = 20.0f; // [m]
-	topSquare.y = 14.0f; // [m]
+	topSquare.y = 14.6f; // [m]
 	topSquare.w = 4.0f; // [m]
-	topSquare.h = 1.0f; // [m]
+	topSquare.h = 0.2f; // [m]
 
 	// Create leftSquare
 	leftSquare = Square();
 	leftSquare.x = 20.0f; // [m]
-	leftSquare.y = 12.0f; // [m]
+	leftSquare.y = 11.3f; // [m]
 	leftSquare.w = 2.0f; // [m]
-	leftSquare.h = 2.0f; // [m]
+	leftSquare.h = 3.3f; // [m]
 
 	// Create rightSquare
 	rightSquare = Square();
 	rightSquare.x = 22.0f; // [m]
-	rightSquare.y = 12.0f; // [m]
+	rightSquare.y = 11.3f; // [m]
 	rightSquare.w = 2.0f; // [m]
-	rightSquare.h = 2.0f; // [m]
+	rightSquare.h = 3.3f; // [m]
 
 	// Create downSquare
 	downSquare = Square();
 	downSquare.x = 20.0f; // [m]
-	downSquare.y = 11.0f; // [m]
+	downSquare.y = 11.2f; // [m]
 	downSquare.w = 4.0f; // [m]
-	downSquare.h = 1.0f; // [m]
+	downSquare.h = 0.2f; // [m]
 
 	// Create Water
 	water = Water();
@@ -184,7 +184,29 @@ Update_Status ModulePhysics::PreUpdate()
 			ball.vy *= ball.coef_restitution;
 		}
 
-		if (is_colliding_with_square(ball, topSquare))
+		if (is_colliding_with_square(ball, leftSquare)) {
+			// TP ball to ground surface
+			ball.x = leftSquare.x - (leftSquare.w / 2) + ball.radius;
+
+			// Elastic bounce with ground
+			ball.vx = -ball.vx;
+
+			// FUYM non-elasticity
+			ball.vy *= ball.coef_friction;
+			ball.vx *= ball.coef_restitution;
+		}
+		else if (is_colliding_with_square(ball, rightSquare)) {
+			// TP ball to ground surface
+			ball.x = rightSquare.x + rightSquare.w + ball.radius;
+
+			// Elastic bounce with ground
+			ball.vx = -ball.vx;
+
+			// FUYM non-elasticity
+			ball.vy *= ball.coef_friction;
+			ball.vx *= ball.coef_restitution;
+		}
+		else if (is_colliding_with_square(ball, topSquare))
 		{
 			// TP ball to ground surface
 			ball.y = topSquare.y + topSquare.h + ball.radius;
@@ -198,7 +220,7 @@ Update_Status ModulePhysics::PreUpdate()
 		}
 		else if (is_colliding_with_square(ball, downSquare)) {
 			// TP ball to ground surface
-			ball.y = downSquare.y - downSquare.h + ball.radius;
+			ball.y = downSquare.y - downSquare.h - ball.radius;
 
 			// Elastic bounce with ground
 			ball.vy = -ball.vy;
@@ -206,28 +228,6 @@ Update_Status ModulePhysics::PreUpdate()
 			// FUYM non-elasticity
 			ball.vx *= ball.coef_friction;
 			ball.vy *= ball.coef_restitution;
-		}
-		else if (is_colliding_with_square(ball, leftSquare)) {
-			// TP ball to ground surface
-			ball.x = leftSquare.x - (leftSquare.w/2) + ball.radius;
-
-			// Elastic bounce with ground
-			ball.vx = -ball.vx;
-
-			// FUYM non-elasticity
-			ball.vy *= ball.coef_friction;
-			ball.vx *= ball.coef_restitution;
-		}
-		else if (is_colliding_with_square(ball, rightSquare)) {
-			// TP ball to ground surface
-			ball.x = rightSquare.x + rightSquare.w - ball.radius;
-
-			// Elastic bounce with ground
-			ball.vx = -ball.vx;
-
-			// FUYM non-elasticity
-			ball.vy *= ball.coef_friction;
-			ball.vx *= ball.coef_restitution;
 		}
 	}
 
@@ -270,20 +270,12 @@ Update_Status ModulePhysics::PostUpdate()
 		// Draw ball
 		App->render->DrawCircle(pos_x, pos_y, size_r, color_r, color_g, color_b);
 
-		// Draw topSquare
-		color_r = 255; color_g = 0; color_b = 255;
+		// Draw square
+		
+		color_r = 255; color_g = 0; color_b = 150;
 		App->render->DrawQuad(topSquare.pixels(), color_r, color_g, color_b, 255);
-
-		// Draw rightSquare
-		color_r = 255; color_g = 255; color_b = 255;
 		App->render->DrawQuad(rightSquare.pixels(), color_r, color_g, color_b, 255);
-
-		// Draw leftSquare
-		color_r = 255; color_g = 0; color_b = 0;
 		App->render->DrawQuad(leftSquare.pixels(), color_r, color_g, color_b, 255);
-
-		// Draw downSquare
-		color_r = 0; color_g = 0; color_b = 255;
 		App->render->DrawQuad(downSquare.pixels(), color_r, color_g, color_b, 255);
 	}
 

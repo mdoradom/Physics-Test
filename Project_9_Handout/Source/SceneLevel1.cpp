@@ -34,7 +34,7 @@ bool SceneLevel1::Start()
 	bgTexture = App->textures->Load("Assets/Sprites/fondito.png");
 	grassTexture = App->textures->Load("Assets/Sprites/suelito.png");
 	plantTexture = App->textures->Load("Assets/Sprites/plantitas.png");
-	App->audio->PlayMusic("Assets/Music/stage1.ogg", 1.0f);
+	//App->audio->PlayMusic("Assets/Music/stage1.ogg", 1.0f);
 
 	// Add colliders
 	//App->collisions->AddCollider({ 0, 221, 3930, 16 }, Collider::Type::WALL);
