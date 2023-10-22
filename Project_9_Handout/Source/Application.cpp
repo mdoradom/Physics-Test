@@ -18,6 +18,8 @@
 #include "PerfTimer.h"
 #include "Timer.h"
 
+#include <string.h>
+
 
 Application::Application()
 {
@@ -132,8 +134,8 @@ void Application::FinishUpdate()
 	sprintf_s(title, 256, "%s: Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %I32u Frame Count: %I64u ",
 		gameTitle.GetString(), averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
 
-	App->window.
-	Application->window->SetTitle(title);
+	App->window->SetTitle(title);
+	
 }
  
 bool Application::CleanUp()

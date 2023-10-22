@@ -24,6 +24,9 @@ public:
 	// Destroys the window and uninitializes the SDL library
 	bool CleanUp() override;
 
+	// Changae title
+	void SetTitle(const char* title);
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window = nullptr;
